@@ -10,11 +10,11 @@ import java.util.List;
 
 public class Bank {
 
-	/*
-	 * Accounts are read from a fixed-width file. Each account is represented
-	 * as a single line of text. These start and end indexes help to parse the
-	 *line of text into individual account fields.
-	 */
+    /*
+     * Accounts are read from a fixed-width file. Each account is represented
+     * as a single line of text. These start and end indexes help to parse the
+     *line of text into individual account fields.
+     */
 
     private final static int ACCT_START = 0;
     private final static int ACCT_END = 9;
@@ -26,7 +26,7 @@ public class Bank {
     private final static int LAST_NAME_END = 63;
     private final static int BALANCE_START = 63;
 
-    private final static String DATA = "data/accounts.dat";		// data file path
+    private final static String DATA = "../data/accounts.dat";		// data file path
 
     private List<BankAccount> accounts;							// an in-memory list of BankAccount objects
 
@@ -38,7 +38,7 @@ public class Bank {
 
     public Bank() throws IOException {
         accounts = init();
-        int z;
+
         if (accounts == null) {
         	throw new IOException();
         }
@@ -69,9 +69,11 @@ public class Bank {
     public BankAccount login(long accountNo, int pin) {
         BankAccount bankAccount = getAccount(accountNo);
 
-        if (bankAccount.getPin() == pin) {
+        if (bankAccount != null && bankAccount.getPin() == pin) {
             return bankAccount;
-        } else {
+        }
+
+        else {
             return null;
         }
     }
@@ -85,6 +87,7 @@ public class Bank {
 
     public BankAccount getAccount(long accountNo) {
         for (BankAccount account : accounts) {
+
             if (account.getAccountNo() == accountNo) {
                 return account;
             }
@@ -120,13 +123,16 @@ public class Bank {
 
     public boolean save() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(DATA))) {
+
             for (BankAccount account : accounts) {
                 bw.write(account.toString());
                 bw.newLine();
             }
 
             return true;
-        } catch (IOException e) {
+        }
+
+        catch (IOException e) {
         	System.err.println("Error: Unable to write to data file.");
 
         	return false;
@@ -149,11 +155,15 @@ public class Bank {
             while ((account = br.readLine()) != null) {
                 accounts.add(Bank.parseBankAccount(account));
             }
-        } catch (FileNotFoundException e) {
+        }
+
+        catch (FileNotFoundException e) {
             System.err.println("Error: Unable to find data file.");
 
             accounts = null;
-        } catch (IOException e) {
+        }
+
+        catch (IOException e) {
             System.err.println("Error: Unable to read from data file.");
 
             accounts = null;
@@ -172,6 +182,7 @@ public class Bank {
         long accountNo = -1;
 
         for (BankAccount account : accounts) {
+
             if (account.getAccountNo() > accountNo) {
                 accountNo = account.getAccountNo();
             }
