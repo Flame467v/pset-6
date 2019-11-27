@@ -45,6 +45,7 @@ public class ATM {
         public void startup() {
         	long accountNo;
         	int pin;
+          int e;
             boolean createAccount = false;
             System.out.println("Welcome to the AIT ATM!");
 
