@@ -33,7 +33,7 @@ public class BankAccount {
     }
 
     public int getPin() {
-      int p;
+    
         return pin;
     }
 
